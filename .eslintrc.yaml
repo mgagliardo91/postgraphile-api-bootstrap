@@ -1,0 +1,30 @@
+parser: '@typescript-eslint/parser'
+parserOptions:
+    project: [./tsconfig.json]
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:jest/recommended
+plugins:
+  - '@typescript-eslint'
+  - prettier
+  - simple-import-sort
+env:
+  node: true
+  jest: true
+ignorePatterns:
+  - src/types/**/*.ts
+  - docs/*
+rules:
+  '@typescript-eslint/await-thenable': error
+  '@typescript-eslint/no-floating-promises': error
+  '@typescript-eslint/no-unused-vars': [error, argsIgnorePattern: ^_]
+  '@typescript-eslint/require-await': error
+  jest/expect-expect: off
+  no-duplicate-imports: error
+  object-shorthand: [error, always]
+  prefer-arrow-callback: error
+  prefer-template: error
+  prettier/prettier: error
+  simple-import-sort/exports: error
+  simple-import-sort/imports: error

@@ -1,0 +1,14 @@
+.DS_Store
+.env
+.eslintcache
+.ipynb_checkpoints/
+.vscode/
+dist/
+node_modules/
+charts/**/**.tgz
+__generated__/
+site/
+docs/internal/compiled/
+src/db/migrations/repeatable/00_**.sql
+*.crt
+logs/
