@@ -1,0 +1,10 @@
+*
+!src/*
+!docs/*
+!package.json
+!package-lock.json
+!codegen.ts
+!timescale-ca-cert.pem
+!tsconfig.json
+!tsconfig.prod.json
+!.gmrc.js

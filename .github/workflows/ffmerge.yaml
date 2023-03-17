@@ -1,0 +1,15 @@
+name: FF Merge
+
+on: 
+  issue_comment:
+    types: [created]
+
+jobs:
+  ff-merge:
+    runs-on: [self-hosted, ndustrial-runner-small]
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/fast-forward')
+    steps:
+      - name: Fast Forward
+        uses: ndustrialio/actions/ffmerge@main
+        with:
+          token: ${{ secrets.NIO_BOT_TOKEN }}
