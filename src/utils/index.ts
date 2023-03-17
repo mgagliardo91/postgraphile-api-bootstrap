@@ -14,3 +14,4 @@ export function safeExecute<T>(
 }
 
 export { default as logger } from './logger'
+export { default as morgan } from './morgan'

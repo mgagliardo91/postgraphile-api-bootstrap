@@ -3,7 +3,7 @@ ingress:
 extraEnvVars:
   - name: NODE_ENV
     value: staging
-  - name: POSTGRES_CONNECTION
+  - name: POSTGRES_URL
     valueFrom:
       secretKeyRef:
         name: "{{ .Values.ndustrial.env }}-nio-internal-api"

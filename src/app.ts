@@ -3,14 +3,13 @@ import cors from 'cors'
 import express from 'express'
 import { createServer } from 'http'
 import { isObject } from 'lodash'
-import morgan from 'morgan'
 import { AddressInfo } from 'net'
 import { promisify } from 'util'
 
 import createLandingPage from './apollo/landingPage'
 import { isTest, PORT } from './env'
 import PostgraphileServer from './postgraphile'
-import { logger, safeExecute } from './utils'
+import { logger, morgan, safeExecute } from './utils'
 
 function isAddressInfo(
   addressInfo: string | AddressInfo | null,
@@ -23,17 +22,7 @@ export default async (serverPort: number = PORT) => {
 
   logger.info('nio-internal initializing...')
   const app = express()
-  app.use(
-    morgan(':method :url :status :res[content-length] - :response-time ms', {
-      skip: (req) =>
-        isTest ||
-        req.url === '/healthz' ||
-        req.method === 'OPTIONS' ||
-        (req.url === '/graphql' &&
-          req.method === 'POST' &&
-          (req.body ?? {})?.operationName?.indexOf('IntrospectionQuery') >= 0),
-    }),
-  )
+  app.use(morgan)
 
   app.use(
     cors({
