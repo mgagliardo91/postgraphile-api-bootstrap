@@ -9,14 +9,3 @@ externalSecrets:
       - name: postgres
         sourceKey: "{{ .Values.ndustrial.env }}/nionic-api"
         sourceProp: postgres-contxt
-ndustrial:
-  project: nionic
-  name: nio-internal-api
-  env: staging
-  type: api
-  organization: ndustrial
-  owner: unknown
-  managed_by: helm
-  depends: []
-
-contxt: {}
