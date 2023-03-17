@@ -3,7 +3,6 @@ image:
   registry: quay.io
   repository: ndustrialio/nio-internal-api
   tag: latest
-  pullSecrets:
 externalSecrets:
   - secret: "{{ .Values.ndustrial.env }}-nio-internal-api"
     properties:
