@@ -1,5 +1,8 @@
 ingress:
-  enabled: false
+  hostname: nio-internal.api.staging.ndustrial.io
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:963168760551:certificate/af0a90fa-2c67-4b56-8019-6a0afb9e5e17
+    alb.ingress.kubernetes.io/scheme: internal
 extraEnvVars:
   - name: NODE_ENV
     value: staging
