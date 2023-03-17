@@ -1,0 +1,12 @@
+ingress:
+  enabled: false
+extraEnvVars:
+  - name: NODE_ENV
+    value: production
+  - name: POSTGRES_CONNECTION
+    valueFrom:
+      secretKeyRef:
+        name: "{{ .Values.ndustrial.env }}-nio-internal-api"
+        key: postgres
+ndustrial:
+  env: prod

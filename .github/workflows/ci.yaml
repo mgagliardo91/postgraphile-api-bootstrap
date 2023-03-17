@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [staging]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  test:
+    runs-on: [self-hosted, ndustrial-runner-small]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install package
+        run: npm ci
+      - name: Run linters
+        run: npm run lint -- --no-fix
+
+  all-successful:
+    if: always()
+    needs: [test]
+    runs-on: [self-hosted, ndustrial-runner-small]
+    steps:
+    - uses: re-actors/alls-green@release/v1
+      with:
+        jobs: ${{ toJSON(needs) }}
+
+
+  release:
+    runs-on: [self-hosted, ndustrial-runner-small]
+    needs: [all-successful]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Bump version
+        uses: TriPSs/conventional-changelog-action@v3
+        id: version
+        with:
+          github-token: ${{ secrets.NIO_BOT_TOKEN }}
+          preset: conventionalcommits
+          skip-version-file: true
+          skip-commit: true
+          output-file: false
+          skip-on-empty: false
+      - name: Create release
+        uses: actions/create-release@v1
+        if: ${{ steps.version.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.NIO_BOT_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          release_name: ${{ steps.version.outputs.tag }}
+          body: ${{ steps.version.outputs.clean_changelog }}
+          commitish: ${{ env.SHA }}

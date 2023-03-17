@@ -1,0 +1,29 @@
+name: Promote Staging
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['CI']
+    branches: [staging]
+    types: [completed]
+
+concurrency:
+  group: 'promote-staging'
+  cancel-in-progress: true
+
+jobs:
+  promote-staging:
+    runs-on: [self-hosted, ndustrial-runner-small]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Create Pull Request
+        uses: devops-infra/action-pull-request@v0.5.1
+        with:
+          github_token: ${{ secrets.NIO_BOT_TOKEN }}
+          source_branch: staging
+          target_branch: main
+          get_diff: true
+          template: .github/PROMOTE_TEMPLATE.md
+          reviewer: '@ndustrialio/graphiti-artists'
+          title: 'chore: promote staging'

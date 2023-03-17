@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: staging
+    schedule:
+      interval: "weekly"
+    labels:
+      - automerge
+    ignore:
+      - dependency-name: "dd-trace"
