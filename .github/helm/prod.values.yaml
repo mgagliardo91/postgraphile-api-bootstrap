@@ -1,5 +1,5 @@
 ingress:
-  hostname: nio-internal.api.staging.ndustrial.io
+  hostname: nio-internal.api.ndustrial.io
   annotations:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:963168760551:certificate/c802686e-de84-4c00-bb14-7dc3d2769e06
     alb.ingress.kubernetes.io/scheme: internal
