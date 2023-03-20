@@ -35,6 +35,7 @@ export default async (serverPort: number = PORT) => {
     }),
   )
 
+  app.set('trust proxy', true)
   app.get('/healthz', (_, res) =>
     isServerHealthy ? res.send({ status: 'OK' }) : res.status(503),
   )

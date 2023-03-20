@@ -4,7 +4,7 @@ import { isTest } from '../env'
 import logger from './logger'
 
 export default morgan(
-  `:method :url :status :res[content-length] - :response-time ms`,
+  `:method :url :status :res[content-length] :remote-addr - :response-time ms`,
   {
     skip: (req) =>
       isTest ||
