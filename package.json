@@ -48,7 +48,7 @@
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
-    "pg-promise": "^11.4.1",
+    "pg-promise": "^11.4.3",
     "postgraphile": "^4.13.0",
     "postgraphile-plugin-connection-filter": "^2.3.0",
     "postgraphile-upsert-plugin": "^3.2.2",
