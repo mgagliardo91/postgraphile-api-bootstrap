@@ -20,7 +20,7 @@
     "test:int": "TEST_TYPE=integration jest"
   },
   "dependencies": {
-    "@authzed/authzed-node": "^0.10.0",
+    "@authzed/authzed-node": "^0.11.0",
     "@graphile-contrib/pg-many-to-many": "^1.0.2",
     "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "@graphile/logger": "^0.2.0",
