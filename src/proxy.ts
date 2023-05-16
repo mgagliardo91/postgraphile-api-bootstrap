@@ -9,13 +9,13 @@ const getRoutingPath = (req: Request) =>
 
 export default (app: Application) => {
   app.use(
-    '/api/:tenant',
+    '/proxy/:tenant',
     createProxyMiddleware({
       changeOrigin: true,
       router: getRoutingPath,
       logLevel: 'debug',
       pathRewrite: (path, req) => {
-        const newPath = path.replace(`/api/${req.params.tenant}`, '')
+        const newPath = path.replace(`/proxy/${req.params.tenant}`, '')
         return newPath === '' ? '/graphql' : newPath
       },
     }),
