@@ -9,6 +9,7 @@ import { promisify } from 'util'
 import createLandingPage from './apollo/landingPage'
 import { isTest, PORT } from './env'
 import PostgraphileServer from './postgraphile'
+import createProxy from './proxy'
 import { logger, morgan, safeExecute } from './utils'
 
 function isAddressInfo(
@@ -23,6 +24,7 @@ export default async (serverPort: number = PORT) => {
   logger.info('nio-internal initializing...')
   const app = express()
   app.use(morgan)
+  createProxy(app)
 
   app.use(
     cors({
