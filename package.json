@@ -54,7 +54,7 @@
     "postgraphile-plugin-connection-filter": "^2.3.0",
     "postgraphile-upsert-plugin": "^3.2.2",
     "uuid": "^9.0.0",
-    "winston": "^3.8.2"
+    "winston": "^3.9.0"
   },
   "devDependencies": {
     "@types/async-exit-hook": "^2.0.0",
