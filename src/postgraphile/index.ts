@@ -1,28 +1,36 @@
 import retry from 'async-retry'
 import * as Express from 'express'
+import { Request } from 'express'
 import { Pool } from 'pg'
 import postgraphile, { HttpRequestHandler } from 'postgraphile'
 import { setTimeout } from 'timers/promises'
 
 import { runMigrations } from '../db/migrate'
 import { POSTGRES_URL } from '../env'
+import tenantPlugin from '../extensions/tenant'
 import buildDefaultOptions from './options'
+
+export interface GraphQLRequest extends Request {
+  body: GraphQLRequest
+}
 
 class PostgraphileServer {
   private postgraphilePool: Pool
   private postgraphileHandler: HttpRequestHandler
 
   async start(app: Express.Application) {
-    const options = buildDefaultOptions([])
+    const options = buildDefaultOptions([tenantPlugin])
     this.postgraphilePool = new Pool({
       connectionString: POSTGRES_URL,
     })
     await runMigrations(this.postgraphilePool)
-    this.postgraphileHandler = postgraphile(
-      this.postgraphilePool,
-      ['public'],
-      options,
-    )
+    this.postgraphileHandler = postgraphile(this.postgraphilePool, ['public'], {
+      ...options,
+      additionalGraphQLContextFromRequest: (req: GraphQLRequest) =>
+        Promise.resolve({
+          ...req.context,
+        }),
+    })
     app.use(this.postgraphileHandler)
     await this.waitForListener()
   }

@@ -7,6 +7,7 @@ import { AddressInfo } from 'net'
 import { promisify } from 'util'
 
 import createLandingPage from './apollo/landingPage'
+import databasePool from './db'
 import { isTest, PORT } from './env'
 import PostgraphileServer from './postgraphile'
 import createProxy from './proxy'
@@ -45,6 +46,13 @@ export default async (serverPort: number = PORT) => {
   if (!isTest) {
     await createLandingPage(app)
   }
+
+  app.use((req, _, next) => {
+    req.context = {
+      databasePool,
+    }
+    return next()
+  })
 
   const httpServer = createServer(app)
   const postgraphileServer = new PostgraphileServer()

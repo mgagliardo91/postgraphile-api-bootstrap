@@ -23,6 +23,6 @@ export const POSTGRES_VISITOR =
 export const PG_QUERY_TIMEOUT_MS: number = parseInt(
   process.env.PG_QUERY_TIMEOUT_MS ?? '120000',
 )
-export const PG_MAX_POOL_SIZE = parseInt(process.env.PG_MAX_POOL_SIZE ?? '20')
+export const PG_MAX_POOL_SIZE = parseInt(process.env.PG_MAX_POOL_SIZE ?? '2')
 export const FORCE_POST_MIGRATIONS =
   (process.env.FORCE_POST_MIGRATIONS ?? 'true') === 'true'

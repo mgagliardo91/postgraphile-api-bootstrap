@@ -54,6 +54,8 @@ scalar Cursor
 The root mutation type which contains root level fields which mutate data.
 """
 type Mutation {
+  initializeTenant(slug: String!): Boolean
+
   """Updates a single `Tenant` using a unique key and a patch."""
   updateTenant(
     """
