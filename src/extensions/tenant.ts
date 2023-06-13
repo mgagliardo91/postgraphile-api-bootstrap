@@ -18,8 +18,7 @@ const tenantPlugin = makeExtendSchemaPlugin(() => {
         _info: unknown,
       ) => {
         const { databasePool } = context
-
-        const tenantSlug = args.slug
+        const { slug: tenantSlug } = args
 
         const tenant = await databasePool.oneOrNone<{ slug: string }>(
           `SELECT slug FROM tenants WHERE slug = $(tenantSlug)`,
@@ -41,6 +40,14 @@ const tenantPlugin = makeExtendSchemaPlugin(() => {
         }
 
         await databasePool.query(`CREATE DATABASE ${tenantSlug}`)
+        await databasePool.query(
+          `
+          UPDATE tenants
+          SET nionic_enabled = TRUE
+          WHERE slug = $(tenantSlug)
+        `,
+          { tenantSlug },
+        )
       },
     },
   }
