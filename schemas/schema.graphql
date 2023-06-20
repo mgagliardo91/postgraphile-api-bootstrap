@@ -300,6 +300,7 @@ input StringFilter {
 
 type Tenant implements Node {
   legacyId: UUID
+  name: String!
   nionicEnabled: Boolean
 
   """
@@ -324,6 +325,9 @@ input TenantCondition {
   """Checks for equality with the object’s `legacyId` field."""
   legacyId: UUID
 
+  """Checks for equality with the object’s `name` field."""
+  name: String
+
   """Checks for equality with the object’s `nionicEnabled` field."""
   nionicEnabled: Boolean
 
@@ -334,6 +338,9 @@ input TenantCondition {
 type TenantDistinctCountAggregates {
   """Distinct count of legacyId across the matching connection"""
   legacyId: BigInt
+
+  """Distinct count of name across the matching connection"""
+  name: BigInt
 
   """Distinct count of nionicEnabled across the matching connection"""
   nionicEnabled: BigInt
@@ -352,6 +359,9 @@ input TenantFilter {
   """Filter by the object’s `legacyId` field."""
   legacyId: UUIDFilter
 
+  """Filter by the object’s `name` field."""
+  name: StringFilter
+
   """Filter by the object’s `nionicEnabled` field."""
   nionicEnabled: BooleanFilter
 
@@ -369,6 +379,7 @@ input TenantFilter {
 Represents an update to a `Tenant`. Fields that are set will be updated.
 """
 input TenantPatch {
+  name: String
   nionicEnabled: Boolean
   slug: String
 }
@@ -417,6 +428,7 @@ type TenantsEdge {
 
 """Grouping methods for `Tenant` for usage during aggregation."""
 enum TenantsGroupBy {
+  NAME
   NIONIC_ENABLED
 }
 
@@ -430,6 +442,8 @@ input TenantsHavingInput {
 enum TenantsOrderBy {
   LEGACY_ID_ASC
   LEGACY_ID_DESC
+  NAME_ASC
+  NAME_DESC
   NATURAL
   NIONIC_ENABLED_ASC
   NIONIC_ENABLED_DESC
