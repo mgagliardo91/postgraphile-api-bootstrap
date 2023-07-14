@@ -31,17 +31,15 @@ const tenantPlugin = makeExtendSchemaPlugin(() => {
           throw Error(`Invalid tenant slug: ${tenantSlug}`)
         }
 
-        const dbName = tenantSlug.replaceAll('-', '_')
-
         const exists = await databasePool.one<{ exists: boolean }>(
-          `SELECT EXISTS (SELECT datname FROM pg_database WHERE datname = '${dbName}')`,
+          `SELECT EXISTS (SELECT datname FROM pg_database WHERE datname = '${tenantSlug}')`,
         )
 
         if (exists.exists) {
           return
         }
 
-        await databasePool.query(`CREATE DATABASE ${dbName}`)
+        await databasePool.query(`CREATE DATABASE ${tenantSlug}`)
         await databasePool.query(
           `
           UPDATE tenants
