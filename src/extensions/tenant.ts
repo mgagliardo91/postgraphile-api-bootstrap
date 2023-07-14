@@ -39,7 +39,7 @@ const tenantPlugin = makeExtendSchemaPlugin(() => {
           return
         }
 
-        await databasePool.query(`CREATE DATABASE ${tenantSlug}`)
+        await databasePool.query(`CREATE DATABASE "${tenantSlug}"`)
         await databasePool.query(
           `
           UPDATE tenants
