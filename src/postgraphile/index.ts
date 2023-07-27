@@ -7,7 +7,7 @@ import { setTimeout } from 'timers/promises'
 
 import { runMigrations } from '../db/migrate'
 import { POSTGRES_URL } from '../env'
-import tenantPlugin from '../extensions/tenant'
+import extensions from '../extensions'
 import buildDefaultOptions from './options'
 
 export interface GraphQLRequest extends Request {
@@ -19,7 +19,7 @@ class PostgraphileServer {
   private postgraphileHandler: HttpRequestHandler
 
   async start(app: Express.Application) {
-    const options = buildDefaultOptions([tenantPlugin])
+    const options = buildDefaultOptions([...extensions])
     this.postgraphilePool = new Pool({
       connectionString: POSTGRES_URL,
     })

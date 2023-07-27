@@ -10,7 +10,6 @@ import createLandingPage from './apollo/landingPage'
 import databasePool from './db'
 import { isTest, PORT } from './env'
 import PostgraphileServer from './postgraphile'
-import createProxy from './proxy'
 import { logger, morgan, safeExecute } from './utils'
 
 function isAddressInfo(
@@ -22,10 +21,9 @@ function isAddressInfo(
 export default async (serverPort: number = PORT) => {
   let isServerHealthy = false
 
-  logger.info('nio-internal initializing...')
+  logger.info('Initializing...')
   const app = express()
   app.use(morgan)
-  createProxy(app)
 
   app.use(
     cors({
